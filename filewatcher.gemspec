@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'pony'
   s.add_dependency 'letter_opener'
 
+  s.add_development_dependency 'rake'
   s.add_development_dependency 'aruba'
 
   s.files         = `git ls-files`.split("\n")
