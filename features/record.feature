@@ -19,6 +19,5 @@ Feature: Notify when changed
     Then a file matching %r<email/.*/plain.html> should exist
     And a file matching %r<buffer/.+> should not exist
     When I run `filewatcher spots/Zeeland/Brouwersdam`
-    Then the output from "filewatcher spots/Zeeland/Brouwersdam" should contain exactly ""
-    And a file matching %r<buffer/.+> should exist
+    Then a file matching %r<buffer/.+> should exist
 
