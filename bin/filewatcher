@@ -1,40 +1,7 @@
-#!/bin/sh
-set -o nounset
+#!/usr/bin/env ruby
 
-# --- Settings ---
-# Where to store the links to the changed files
-BUFFER_PATH="/tmp/filewatcher"
+$:.unshift(File.join(File.dirname(__FILE__), "/../lib"))
+require 'filewatcher'
 
-# How many files should have changed before sending out a notification
-MAX_BUFFER_SIZE=2
-
-# --- End of settings ---
-
-# Linux
-md5=$(which md5sum)
-if [ ! $md5 ]; then
-  # OS X
-  md5=$(which md5)
-fi
-
-set -o errexit
-
-if [ ! $md5 ]; then
-  echo "Error: no md5 bin found in your path"
-  exit 1
-fi
-
-mkdir -p $BUFFER_PATH
-
-file=$*
-
-ln -sf "$file" "$BUFFER_PATH/$(cat "$file" | $md5)"
-
-files=$(readlink $BUFFER_PATH/*)
-buffer_size=$(echo "$files" | wc -l)
-
-if [ $buffer_size -ge $MAX_BUFFER_SIZE ]; then
-  rm -f $BUFFER_PATH/*
-  echo $files
-fi
+Filewatcher::Record.new ARGV.join ' '
 
